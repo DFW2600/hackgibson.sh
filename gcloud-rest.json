@@ -1,0 +1,106 @@
+{
+  "creationTimestamp": "2021-07-03T16:26:01.880-07:00",
+  "description": "hackgibson.sh hidden service",
+  "id": "6337935774197828838",
+  "kind": "compute#instanceTemplate",
+  "name": "onion-service",
+  "properties": {
+    "confidentialInstanceConfig": {
+      "enableConfidentialCompute": false
+    },
+    "scheduling": {
+      "onHostMaintenance": "MIGRATE",
+      "automaticRestart": true,
+      "preemptible": false
+    },
+    "tags": {},
+    "disks": [
+      {
+        "type": "PERSISTENT",
+        "deviceName": "onion-service",
+        "autoDelete": true,
+        "index": 0.0,
+        "boot": true,
+        "kind": "compute#attachedDisk",
+        "mode": "READ_WRITE",
+        "initializeParams": {
+          "sourceImage": "projects/debian-cloud/global/images/debian-10-buster-v20210701",
+          "diskType": "pd-balanced",
+          "diskSizeGb": "10"
+        }
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "nic0",
+        "network": "projects/hackgibs/global/networks/default",
+        "accessConfigs": [
+          {
+            "name": "External NAT",
+            "type": "ONE_TO_ONE_NAT",
+            "kind": "compute#accessConfig",
+            "networkTier": "PREMIUM"
+          }
+        ],
+        "kind": "compute#networkInterface"
+      }
+    ],
+    "reservationAffinity": {
+      "consumeReservationType": "ANY_RESERVATION"
+    },
+    "canIpForward": false,
+    "machineType": "e2-small",
+    "metadata": {
+      "fingerprint": "typ82ZG5_KE=",
+      "kind": "compute#metadata",
+      "items": [
+        {
+          "value": "contact.hackgibson.sh",
+          "key": "owner"
+        },
+        {
+          "value": "hidden service",
+          "key": "role"
+        },
+        {
+          "value": "tor",
+          "key": "application"
+        },
+        {
+          "value": "<see startup.sh>",
+          "key": "startup-script"
+        }
+      ]
+    },
+    "shieldedVmConfig": {
+      "enableSecureBoot": false,
+      "enableVtpm": false,
+      "enableIntegrityMonitoring": false
+    },
+    "shieldedInstanceConfig": {
+      "enableSecureBoot": false,
+      "enableVtpm": false,
+      "enableIntegrityMonitoring": false
+    },
+    "labels": {
+      "org": "<account_id>"
+    },
+    "serviceAccounts": [
+      {
+        "email": "<svc_acct>@developer.gserviceaccount.com",
+        "scopes": [
+          "https://www.googleapis.com/auth/devstorage.read_only",
+          "https://www.googleapis.com/auth/logging.write",
+          "https://www.googleapis.com/auth/monitoring.write",
+          "https://www.googleapis.com/auth/servicecontrol",
+          "https://www.googleapis.com/auth/service.management.readonly",
+          "https://www.googleapis.com/auth/trace.append"
+        ]
+      }
+    ],
+    "displayDevice": {
+      "enableDisplay": false
+    }
+  },
+  "selfLink": "projects/hackgibs/global/instanceTemplates/onion-service"
+}
