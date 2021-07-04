@@ -21,5 +21,6 @@ Service | url
 Tor | http://e2ro3ow3awo7r2favn24n65ycc2qmzkoayn5r57e3f56nvjwdcgg32ad.onion
 Discord | https://discord.com/invite/9hABUzz
 BBS | e2ro3ow3awo7r2favn24n65ycc2qmzkoayn5r57e3f56nvjwdcgg32ad.onion:23
-FidoNET | e2ro3ow3awo7r2favn24n65ycc2qmzkoayn5r57e3f56nvjwdcgg32ad.onion:24554
+FidoNET (binkd) | e2ro3ow3awo7r2favn24n65ycc2qmzkoayn5r57e3f56nvjwdcgg32ad.onion:24554
 Wifi / Bluetooth SSID | "Ellingson Mineral Company" or "EMC Net - <fidonet address>"
+Fidonet (echonet) | 1:124/5017.p2600
