@@ -1,0 +1,55 @@
+html { min-height: 100%; }
+
+* { margin: 0px; padding: 0px; }
+
+a { color: rgb(255, 255, 51); }
+
+a:hover { color: rgb(170, 170, 51); }
+
+body { background: url("bg.jpg") repeat-x rgb(17, 17, 17); color: rgb(221, 221, 221); font: 62.5% "Trebuchet MS", Verdana, sans-serif; }
+
+p, code, ul { padding-bottom: 1.2em; }
+
+h1 { font: 1.8em Tahoma, sans-serif; margin-bottom: 4px; }
+
+h2 { background: url("data:R0lGODlhBQAKAJEAAAAAAKampo2NjaampiH5BAEAAAMALAAAAAAFAAoAAAILnCeXtqgHHXuzmgIAOw==") left bottom repeat-x; color: rgb(204, 204, 204); font: 2em Impact, sans-serif; margin-bottom: 8px; padding-bottom: 11px; letter-spacing: 1px; }
+
+blockquote { color: rgb(204, 204, 170); display: block; font-weight: bold; padding-left: 28px; }
+
+h1, h2 { padding-top: 6px; }
+
+.clearer { clear: both; font-size: 0px; }
+
+.left { float: left; }
+
+.right { float: right; }
+
+.wrapper { font-size: 1.3em; margin: 0px auto; width: 780px; }
+
+.container { background: url("header.gif") center top no-repeat; }
+
+.title { font: 3em Tahoma, sans-serif; text-decoration: line-through; }
+
+.olive { color: rgb(204, 204, 170); }
+
+.sidenav { background: url("sidenav.gif") right top no-repeat; padding-top: 126px; float: right; width: 210px; }
+
+.sidenav h2 { color: rgb(153, 170, 51); font-size: 1.4em; line-height: 30px; margin: 0px; }
+
+.sidenav ul { padding: 0.5em 0px 0px 0.5em; }
+
+.sidenav li { list-style: none; }
+
+.sidenav li a { font-size: 1.1em; line-height: 1.5em; color: rgb(119, 119, 119); text-decoration: none; }
+
+.sidenav li a:hover { color: rgb(141, 202, 63); }
+
+.content { float: left; margin: 10px 0px; padding-top: 32px; width: 531px; }
+
+.content .descr { color: rgb(141, 198, 63); margin-bottom: 6px; }
+
+.content li { margin-left: 18px; }
+
+.footer { background: url("http://hackgibson.sh/bgfooter.gif") repeat-x; border-top: 1px dashed rgb(51, 51, 51); color: rgb(119, 119, 119); font: 0.9em sans-serif; padding: 10px 0px 16px; }
+
+.footer a { color: rgb(119, 136, 68); text-decoration: none; }
