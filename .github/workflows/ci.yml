@@ -1,0 +1,99 @@
+---
+name: Build docker image and push to remote registry
+
+on: push
+
+env:
+  REGISTRY: "index.docker.io"
+  NAMESPACE: daplanet/${{ github.repository_owner }}
+  
+jobs:
+
+  docker:
+    name: Build and Push docker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      
+    defaults:
+      run:
+        shell: bash -o pipefile -e -c
+        
+    strategy:
+      matrix:
+        images: ["${{ github.repository }}"]
+        
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: xom9ikk/split@v1
+        id: split
+        with:
+          string: "${{ matrix.images }}"
+          separator: "/"
+          limit: -1
+          
+      - name: Setup Build matrix (for multiple image folders)
+        uses: kanga333/variable-mapper@master
+        id: export
+        with:
+          key: "${{steps.split.outputs._1}}"
+          export_to: env,log,output
+          map: |
+            {
+              ".*": {
+                "dockerfile": "./Dockerfile",
+                "version": "${{github.sha}}",
+                "context": "./",
+                "build_args": "REPO=${{env.NAMESPACE}}"
+               }
+             }
+             
+       - name: Extract docker metadata
+         id: meta
+         uses: docker/metadata-action@v3
+         with:
+           images: ${{env.REGISTRY}}/${{env.NAMESPACE}}/${{steps.split.outputs._1}}
+           flavor: |
+             latest=auto,prefix=,suffix=
+           tags: |
+             type=raw,enable=true,prefix=,suffix=,value=${{steps.export.outputs.version}}
+             type=sha,enable=true,prefix=,suffix=,format=short
+             type=edge,enable=true,prefix=,suffix=,branch=${{github.event.repository.default_branch}}
+
+       - name: Validate Dockerfile
+         uses: hadolint/hadolintp-action@master
+         with:
+           dockerfile: ${{env.dockerfile}}
+       
+       - name: Sysdig CI SBenchmarker
+         uses: sysdiglabs/benchmark-dockerfile@master
+         with:
+           directory: ${{env.context}}
+           
+       - name: Login to remote registry
+         if: github.event_name != 'pull_request'
+         uses: docker/login-action@master
+         with:
+           registry: "${{ env.REPOSITORY }}"
+           username: "${{ env.REPO_USER  }}"
+           password: "${{ secrets.REPO_TOKEN }}"
+           
+       - name: Build and Push to remote registry
+         uses: docker/build-push-action@master
+         continue-on-error: true
+         with:
+           push: ${{ github.envent_name != 'pull_request' }}
+           context: ${{ env.context }}
+           file: ${{ env.dockerfile }}
+           tags: ${{ steps.meta.outputs.tags }}
+           labels: ${{ steps.meta.outputs.labels }}
+           build-args: ${{steps.export.outputs.build_args}}
+           
+       - name: Validate Docker image
+         uses: yuichielectric/dive-action@master
+         with:
+           image: ${{steps.meta.outputs.tags}}
+           github-token: ${{ github.token }}
+           config-file: ${{ github.workspace }}/.dive-ci.yml
