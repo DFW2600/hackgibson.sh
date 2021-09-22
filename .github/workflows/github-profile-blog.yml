@@ -39,4 +39,4 @@ jobs:
         with:
           gh_token: ${{ github.token }}
           feed_list: ${{ env.RSS_FEEDS }}
-          readme_path: ./profile/README.md
+          readme_path: ./README.md
