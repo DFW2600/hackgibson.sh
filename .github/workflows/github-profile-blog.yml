@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Github Profile blog
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule: # Run workflow automatically
+    - cron: '0 * * * *' # Runs every hour, on the hour  
+
+  workflow_dispatch:
+  
+  repository_dispatch:
+    types:
+      - webhook
+
+env:
+  RSS_FEEDS: https://github.com/DFW2600/hackgibson.sh/commits/main.atom
+
+jobs:
+
+  prebuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: technote-space/auto-cancel-redundant-workflow@v1
+      - name: Cancel redundant workflows
+        run: echo "Cancel redundant workflows finished"
+          
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Blog Post Workflow
+        uses: gautamkrishnar/blog-post-workflow@1.5.6
+        with:
+          gh_token: ${{ github.token }}
+          feed_list: ${{ env.RSS_FEEDS }}
+          readme_path: ./profile/README.md
