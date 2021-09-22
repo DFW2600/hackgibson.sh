@@ -50,50 +50,50 @@ jobs:
                }
              }
              
-       - name: Extract docker metadata
-         id: meta
-         uses: docker/metadata-action@v3
-         with:
-           images: ${{env.REGISTRY}}/${{env.NAMESPACE}}/${{steps.split.outputs._1}}
-           flavor: |
-             latest=auto,prefix=,suffix=
-           tags: |
-             type=raw,enable=true,prefix=,suffix=,value=${{steps.export.outputs.version}}
-             type=sha,enable=true,prefix=,suffix=,format=short
-             type=edge,enable=true,prefix=,suffix=,branch=${{github.event.repository.default_branch}}
+      - name: Extract docker metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{env.REGISTRY}}/${{env.NAMESPACE}}/${{steps.split.outputs._1}}
+          flavor: |
+            latest=auto,prefix=,suffix=
+          tags: |
+            type=raw,enable=true,prefix=,suffix=,value=${{steps.export.outputs.version}}
+            type=sha,enable=true,prefix=,suffix=,format=short
+            type=edge,enable=true,prefix=,suffix=,branch=${{github.event.repository.default_branch}}
 
-       - name: Validate Dockerfile
-         uses: hadolint/hadolintp-action@master
-         with:
-           dockerfile: ${{env.dockerfile}}
+      - name: Validate Dockerfile
+        uses: hadolint/hadolintp-action@master
+        with:
+          dockerfile: ${{env.dockerfile}}
        
-       - name: Sysdig CI SBenchmarker
-         uses: sysdiglabs/benchmark-dockerfile@master
-         with:
-           directory: ${{env.context}}
+      - name: Sysdig CI SBenchmarker
+        uses: sysdiglabs/benchmark-dockerfile@master
+        with:
+          directory: ${{env.context}}
            
-       - name: Login to remote registry
-         if: github.event_name != 'pull_request'
-         uses: docker/login-action@master
-         with:
-           registry: "${{ env.REPOSITORY }}"
-           username: "${{ env.REPO_USER  }}"
-           password: "${{ secrets.REPO_TOKEN }}"
+      - name: Login to remote registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@master
+        with:
+          registry: "${{ env.REPOSITORY }}"
+          username: "${{ env.REPO_USER  }}"
+          password: "${{ secrets.REPO_TOKEN }}"
            
-       - name: Build and Push to remote registry
-         uses: docker/build-push-action@master
-         continue-on-error: true
-         with:
-           push: ${{ github.envent_name != 'pull_request' }}
-           context: ${{ env.context }}
-           file: ${{ env.dockerfile }}
-           tags: ${{ steps.meta.outputs.tags }}
-           labels: ${{ steps.meta.outputs.labels }}
-           build-args: ${{steps.export.outputs.build_args}}
+      - name: Build and Push to remote registry
+        uses: docker/build-push-action@master
+        continue-on-error: true
+        with:
+          push: ${{ github.envent_name != 'pull_request' }}
+          context: ${{ env.context }}
+          file: ${{ env.dockerfile }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: ${{steps.export.outputs.build_args}}
            
-       - name: Validate Docker image
-         uses: yuichielectric/dive-action@master
-         with:
-           image: ${{steps.meta.outputs.tags}}
-           github-token: ${{ github.token }}
-           config-file: ${{ github.workspace }}/.dive-ci.yml
+      - name: Validate Docker image
+        uses: yuichielectric/dive-action@master
+        with:
+          image: ${{steps.meta.outputs.tags}}
+          github-token: ${{ github.token }}
+          config-file: ${{ github.workspace }}/.dive-ci.yml
