@@ -26,9 +26,9 @@ Wifi / Bluetooth SSID | "Ellingson Mineral Company" or "EMC Net - <fidonet addre
 
 ## Latest Changes
 <!-- BLOG-POST-LIST:START -->
+- [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/9be686e363e7c7b73a4037acf31dc7925371fc18)
 - [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/15022d7c6f9f277bd23492dffb0848a08f0bc6ff)
 - [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/755942e01b165444e7238a439c89b670a5a5e795)
 - [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/6bef6b367221db5863ac334e02851e1ec0c637f4)
 - [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/e9be2df9fed31ae6b9714737b543a7e3ce7fd22a)
-- [Updated with the latest blog posts](https://github.com/DFW2600/hackgibson.sh/commit/25d6dadfff2637b7cbccbe7cfc63c2fd5b9292f9)
 <!-- BLOG-POST-LIST:END -->
